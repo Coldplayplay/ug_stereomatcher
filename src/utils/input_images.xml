@@ -10,8 +10,8 @@
 	 /././rightn.tif
  -->
 <images>
-./left.tif
-./right.tif
+/home/cbc/catkin_ws/src/ug_stereomatcher/src/utils/left.tif
+/home/cbc/catkin_ws/src/ug_stereomatcher/src/utils/right.tif
 </images>
 </opencv_storage>
 

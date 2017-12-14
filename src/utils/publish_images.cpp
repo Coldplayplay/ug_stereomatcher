@@ -5,11 +5,14 @@
 //  Created by Gerardo Aragon on November, 2012.
 //  Copyright (c) 2012 Gerardo Aragon. All rights reserved.
 
+#include <iostream>
+
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <ros/package.h>
 #include <sensor_msgs/image_encodings.h>
 // Opencv
+#include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -21,7 +24,7 @@ using namespace std;
 #include <ug_stereomatcher/CamerasSync.h>
 #include <sensor_msgs/CameraInfo.h>
 
-bool showImage = true;
+bool showImage = false;
 
 static const char WINDOW_LEFT[] = "Left image";
 static const char WINDOW_RIGHT[] = "Right image";
@@ -87,21 +90,25 @@ public:
             nh_.shutdown();
 		    return;
 		}
-
+/*
 		if(showImage)
 		{
-			cv::namedWindow(WINDOW_LEFT, CV_WINDOW_NORMAL);
-			cv::resizeWindow(WINDOW_LEFT, 640, 480);
-			cvMoveWindow(WINDOW_LEFT, 10, 10);
+			
+            //cv::namedWindow(WINDOW_LEFT, cv_bridge::CvImage);
+            //cv::namedWindow(WINDOW_RIGHT, CV_WINDOW_AUTOSIZE);
+            
+            cv::namedWindow(WINDOW_LEFT, CV_WINDOW_AUTOSIZE);
+			//cv::resizeWindow(WINDOW_LEFT, 640, 480);
+			//cvMoveWindow(WINDOW_LEFT, 10, 10);
 
-			cv::namedWindow(WINDOW_RIGHT, CV_WINDOW_NORMAL);
-			cv::resizeWindow(WINDOW_RIGHT, 640, 480);
-			cvMoveWindow(WINDOW_RIGHT, 650, 10);
+			cv::namedWindow(WINDOW_RIGHT, CV_WINDOW_AUTOSIZE);
+			//cv::resizeWindow(WINDOW_RIGHT, 640, 480);
+		    //cvMoveWindow(WINDOW_RIGHT, 650, 10);
 
 			cv::startWindowThread();
 			ROS_INFO("Windows initialised");
 		}
-
+*/
         infoL = loadCameraInfo(urlL);
         infoR = loadCameraInfo(urlR);
 
@@ -149,7 +156,7 @@ public:
 
 			// For each call, read images from the list
 	        left = s_.nextImage(); // Get left image
-	        right = s_.nextImage(); // Get right image
+	        right = s_.nextImage(); // Get right image               
 
             cv_bridge::CvImage cvi;
             ros::Time time = ros::Time::now();
@@ -166,7 +173,8 @@ public:
             infoL.height = left.rows;
             infoL.header.frame_id = CAM_NAMEL;
 
-            ROS_INFO_STREAM("Left Rows: " << left.rows << " Cols: " << left.cols);
+            cout<<"======================================================================"<<endl;
+            ROS_INFO_STREAM("Left Rows: " << left.rows << " Cols: " << left.cols);            
 
             imageL_pub_.publish(cvi.toImageMsg());
             infoL_pub_.publish(infoL);
@@ -185,7 +193,7 @@ public:
             infoR.height = right.rows;
             infoR.header.frame_id = CAM_NAMER;
 
-            ROS_INFO_STREAM("Right Rows: " << right.rows << " Cols: " << right.cols);
+            ROS_INFO_STREAM("Right Rows: " << right.rows << " Cols: " << right.cols);            
 
             imageR_pub_.publish(cvi.toImageMsg());
             infoR_pub_.publish(infoR);
@@ -193,13 +201,18 @@ public:
             // Display Image
             if(showImage)
             {
-                imshow(WINDOW_LEFT, left);
+                namedWindow(WINDOW_LEFT, CV_WINDOW_AUTOSIZE);
+                namedWindow(WINDOW_RIGHT, CV_WINDOW_AUTOSIZE);
+                //cv::startWindowThread();
+			    ROS_INFO("Windows initialised");
+
+                imshow(WINDOW_LEFT, left);                
                 imshow(WINDOW_RIGHT, right);
-                waitKey(3);
+                waitKey(0);
             }
 
             noFrames++;
-
+            cout<<"======================================================================"<<endl;
 			ROS_INFO("Messages published");
 
         }

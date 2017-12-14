@@ -1195,7 +1195,7 @@ int main(int argc, char* argv[])
         ROS_INFO("Saving point cloud option is not enabled!");
 
         // Debug Moz : enabling saving the point cloud
-        rU_.save_cloud = false;
+        rU_.save_cloud = true;
         /**/
     }
 

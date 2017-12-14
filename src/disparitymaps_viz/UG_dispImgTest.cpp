@@ -67,19 +67,19 @@ typedef message_filters::sync_policies::ApproximateTime<stereo_msgs::DisparityIm
    
 };
 
-    void saveDisp::saveImages(string str1, const Mat& im, int reduceIm)
-    {
-        stringstream ss;
-        ROS_INFO_STREAM("Path of the node: " << ros::package::getPath("ug_stereomatcher"));
+void saveDisp::saveImages(string str1, const Mat& im, int reduceIm)
+{
+    stringstream ss;
+    ROS_INFO_STREAM("Path of the node: " << ros::package::getPath("ug_stereomatcher"));
 
-        string out_image = ros::package::getPath("ug_stereomatcher") + "/" + str1;
+    string out_image = ros::package::getPath("ug_stereomatcher") + "/" + str1;
 
-        ROS_INFO("Saving image to: %s", out_image.c_str());
-   
-        imwrite(out_image, im);//, compression_params);
- 
-        ROS_INFO("Images saved!");
-    }
+    ROS_INFO("Saving image to: %s", out_image.c_str());
+
+    imwrite(out_image, im);//, compression_params);
+
+    ROS_INFO("Images saved!");
+}
  
 void saveDisp::getDisparities(const stereo_msgs::DisparityImageConstPtr& dispX_msg, const stereo_msgs::DisparityImageConstPtr& dispY_msg, const stereo_msgs::DisparityImageConstPtr& dispC_msg)
 {
@@ -103,9 +103,9 @@ void saveDisp::getDisparities(const stereo_msgs::DisparityImageConstPtr& dispX_m
         return;
     }
 
-saveImages("_C.tif", cv_dispPtrC->image,1);
-saveImages("_H.tif", cv_dispPtrH->image,1);
-saveImages("_V.tif", cv_dispPtrV->image,1);
+//saveImages("_C.tif", cv_dispPtrC->image,1);
+//saveImages("_H.tif", cv_dispPtrH->image,1);
+//saveImages("_V.tif", cv_dispPtrV->image,1);
 }
 
 /* *************** MAIN PROGRAM *************** */

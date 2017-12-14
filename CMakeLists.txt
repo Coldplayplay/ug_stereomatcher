@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 find_package(PCL REQUIRED)
+include_directories(${PCL_INCLUDE_DIRS})
 
 add_message_files(
 	FILES
@@ -43,6 +44,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+set(OpenCV_DIR "/usr/local/opencv320/share/OpenCV/")
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
@@ -65,7 +67,7 @@ target_link_libraries(UGpoint_cloud ${catkin_LIBRARIES})
 
 add_executable(UGpublish_images src/utils/publish_images.cpp)
 add_dependencies(UGpublish_images ug_stereomatcher_generate_messages_cpp)
-target_link_libraries(UGpublish_images ${catkin_LIBRARIES})
+target_link_libraries(UGpublish_images ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 # ######################### GPUmatcher
 find_package(CUDA REQUIRED) 
@@ -86,6 +88,10 @@ ADD_DEFINITIONS(-DCUDA_BUILD)
 SET(CMAKE_CXX_FLAGS "-O3")
 
 include_directories(/usr/local/cuda/samples/common/inc)
+
+link_directories(${OpenCV_LIBRARY_DIRS})
+link_directories(${CUDA_LIBRARY_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
 
 CUDA_ADD_LIBRARY(MatchLib src/gpu_matcher/MatchLib.cu)
 add_library(MatchGPULib src/gpu_matcher/MatchGPULib.cpp)

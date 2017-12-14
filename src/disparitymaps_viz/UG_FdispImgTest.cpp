@@ -68,19 +68,19 @@ typedef message_filters::sync_policies::ApproximateTime<ug_stereomatcher::foveat
    
 };
 
-    void saveDisp::saveImages(string str1, const Mat& im, int reduceIm)
-    {
-        stringstream ss;
-        ROS_INFO_STREAM("Path of the node: " << ros::package::getPath("ug_stereomatcher"));
+void saveDisp::saveImages(string str1, const Mat& im, int reduceIm)
+{
+    stringstream ss;
+    ROS_INFO_STREAM("Path of the node: " << ros::package::getPath("ug_stereomatcher"));
 
-        string out_image = ros::package::getPath("ug_stereomatcher") + "/" + str1;
+    string out_image = ros::package::getPath("ug_stereomatcher") + "/" + str1;
 
-        ROS_INFO("Saving image to: %s", out_image.c_str());
-   
-        imwrite(out_image, im);//, compression_params);
- 
-        ROS_INFO("Images saved!");
-    }
+    ROS_INFO("Saving image to: %s", out_image.c_str());
+
+    imwrite(out_image, im);//, compression_params);
+
+    ROS_INFO("Images saved!");
+}
  
 void saveDisp::getDisparities(const ug_stereomatcher::foveatedstackConstPtr dispX_msg, const ug_stereomatcher::foveatedstackConstPtr dispY_msg, const ug_stereomatcher::foveatedstackConstPtr dispC_msg)
 {
@@ -103,10 +103,9 @@ void saveDisp::getDisparities(const ug_stereomatcher::foveatedstackConstPtr disp
         ROS_ERROR("Could not convert disparities to 'TYPE_32FC1'");
         return;
     }
-
-saveImages("_FC.tif", cv_dispPtrC->image,1);
-saveImages("_FH.tif", cv_dispPtrH->image,1);
-saveImages("_FV.tif", cv_dispPtrV->image,1);
+    saveImages("_FH.tif", cv_dispPtrH->image,1);
+    saveImages("_FV.tif", cv_dispPtrV->image,1);
+    saveImages("_FC.tif", cv_dispPtrC->image,1);
 }
 
 /* *************** MAIN PROGRAM *************** */

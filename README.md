@@ -1,3 +1,9 @@
+1.input_images.xml里left和right图片名用绝对路径才行
+2.publish_images.cpp中namedWindow是不是定义错地方了，调整了位置并且窗口大小不合适。导致一开始imshow有问题
+3.UF_dispImgTest.cpp中106行imwrite有问题
+
+
+
 # ug_stereomatcher
 
 **NEW** Our matcher now works with CUDA 8.0 and ROS kinetic!
